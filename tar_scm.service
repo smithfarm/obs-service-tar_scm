@@ -105,4 +105,7 @@
   <parameter name="changesauthor">
     <description>Specify author of the changes file entry to be written.  Defaults to first email entry in ~/.oscrc, or "opensuse-packaging@opensuse.org" if there is no .oscrc found.</description>
   </parameter>
+  <parameter name="commandtorun">
+    <description>Given a command, run it using os.system</description>
+  </parameter>
 </service>
