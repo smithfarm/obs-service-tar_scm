@@ -95,20 +95,10 @@ def fetch_upstream_hg(url, clone_dir, revision, cwd, kwargs):
              interactive=sys.stdout.isatty())
 
 
-def fetch_upstream_bzr(url, clone_dir, revision, cwd, kwargs):
-    """Fetch sources from bzr."""
-    command = ['bzr', 'checkout', url, clone_dir]
-    if revision:
-        command.insert(3, '-r')
-        command.insert(4, revision)
-    safe_run(command, cwd, interactive=sys.stdout.isatty())
-
-
 FETCH_UPSTREAM_COMMANDS = {
     'git': fetch_upstream_git,
     'svn': fetch_upstream_svn,
     'hg':  fetch_upstream_hg,
-    'bzr': fetch_upstream_bzr,
 }
 
 
@@ -141,20 +131,10 @@ def update_cache_hg(url, clone_dir, revision):
             raise
 
 
-def update_cache_bzr(url, clone_dir, revision):
-    """Update sources via bzr."""
-    command = ['bzr', 'update']
-    if revision:
-        command.insert(3, '-r')
-        command.insert(4, revision)
-    safe_run(command, cwd=clone_dir, interactive=sys.stdout.isatty())
-
-
 UPDATE_CACHE_COMMANDS = {
     'git': update_cache_git,
     'svn': update_cache_svn,
     'hg':  update_cache_hg,
-    'bzr': update_cache_bzr,
 }
 
 
@@ -214,7 +194,6 @@ SWITCH_REVISION_COMMANDS = {
     'git': switch_revision_git,
     'svn': switch_revision_none,
     'hg':  switch_revision_hg,
-    'bzr': switch_revision_none,
 }
 
 
@@ -280,7 +259,7 @@ def prep_tree_for_tar(repodir, subdir, outdir, dstname):
 
 
 # skip vcs files base on this pattern
-METADATA_PATTERN = re.compile(r'.*/\.(bzr|git|hg|svn).*')
+METADATA_PATTERN = re.compile(r'.*/\.(git|hg|svn).*')
 
 
 def create_tar(repodir, outdir, dstname, extension='tar',
@@ -471,22 +450,12 @@ def detect_version_hg(repodir, versionformat):
     return version_iso_cleanup(version)
 
 
-def detect_version_bzr(repodir, versionformat):
-    """Automatic detection of version number for checked-out BZR repository."""
-    if versionformat is None:
-        versionformat = '%r'
-
-    version = safe_run(['bzr', 'revno'], repodir)[1]
-    return re.sub('%r', version.strip(), versionformat)
-
-
 def detect_version(scm, repodir, versionformat=None):
     """Automatic detection of version number for checked-out repository."""
     detect_version_commands = {
         'git': detect_version_git,
         'svn': detect_version_svn,
         'hg':  detect_version_hg,
-        'bzr': detect_version_bzr,
     }
 
     version = detect_version_commands[scm](repodir, versionformat).strip()
@@ -794,7 +763,7 @@ def parse_args():
                         help='Enable verbose output')
     parser.add_argument('--scm', required=True,
                         help='Specify SCM',
-                        choices=['git', 'hg', 'bzr', 'svn'])
+                        choices=['git', 'hg', 'svn'])
     parser.add_argument('--url', required=True,
                         help='Specify URL of upstream tarball to download')
     parser.add_argument('--version', default='_auto_',

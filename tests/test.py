@@ -12,7 +12,6 @@ import unittest
 from gittests import GitTests
 from svntests import SvnTests
 from hgtests  import HgTests
-from bzrtests import BzrTests
 from testenv import TestEnvironment
 from unittestcases import UnitTestCases
 
@@ -24,7 +23,6 @@ if __name__ == '__main__':
         SvnTests,
         GitTests,
         HgTests,
-        BzrTests,
         UnitTestCases
     ]
 
