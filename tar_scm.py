@@ -803,6 +803,8 @@ def parse_args():
                         help='Whether or not to include git submodules '
                              'from SCM commit log since a given parent '
                              'revision (see changesrevision).')
+    parser.add_argument('--commandtorun', default='',
+                        help='Command to run (using os.system) in the git tree, prior to tar')
     group = parser.add_mutually_exclusive_group()
     group.add_argument('--include', action='append',
                        default=[], metavar='REGEXP',
@@ -924,6 +926,12 @@ def main():
     changes = None
     if args.changesgenerate:
         changes = detect_changes(args.scm, args.url, clone_dir, args.outdir)
+
+    if args.commandtorun:
+        savedir = os.getcwd()
+        os.chdir(clone_dir)
+        os.system(args.commandtorun)
+        os.chdir(savedir)
 
     tar_dir = prep_tree_for_tar(clone_dir, args.subdir, args.outdir,
                                 dstname=dstname)
