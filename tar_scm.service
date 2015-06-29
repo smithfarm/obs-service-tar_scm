@@ -105,6 +105,6 @@
     <description>Specify author of the changes file entry to be written.  Defaults to first email entry in ~/.oscrc, or "opensuse-packaging@opensuse.org" if there is no .oscrc found.</description>
   </parameter>
   <parameter name="commandtorun">
-    <description>Given a command, run it using os.system(). If the command contains spaces, put the entire command in single or double quotes. The quotes will be stripped before the command is passed to os.system().</description>
+    <description>Given a command, run it using subprocess.Popen(). AFAIK the command can be entered just as if at a bash prompt.</description>
   </parameter>
 </service>

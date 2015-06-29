@@ -237,7 +237,7 @@ def fetch_upstream(scm, url, revision, out_dir, **kwargs):
         fetch_upstream_git_submodules(clone_dir, kwargs)
         if kwargs['commandtorun']:
             print "Running command: {}".format(kwargs['commandtorun'])
-            safe_run(kwargs['commandtorun'].split(), cwd=clone_dir)
+            safe_run(kwargs['commandtorun'].split(), cwd=clone_dir, interactive=sys.stdout.isatty())
 
     return clone_dir
 
