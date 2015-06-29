@@ -238,7 +238,7 @@ def fetch_upstream(scm, url, revision, out_dir, **kwargs):
         if kwargs.commandtorun:
             savedir = os.getcwd()
             print "Current working directory is: {}".format(savedir)
-            os.chdir(repodir)
+            os.chdir(clone_dir)
             print "Current working directory is: {}".format(os.getcwd())
             if kwargs.commandtorun.startswith('"') and kwargs.commandtorun.endswith('"'):
                 print "Stripping double quotes from command"
