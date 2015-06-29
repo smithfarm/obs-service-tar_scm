@@ -932,10 +932,10 @@ def main():
         print "Current working directory is: {}".format(savedir)
         os.chdir(clone_dir)
         print "Current working directory is: {}".format(os.getcwd())
-        if args.commandtorun.startswith('"') and args.commandtorun.endswith('"')
+        if args.commandtorun.startswith('"') and args.commandtorun.endswith('"'):
             print "Stripping double quotes from command"
             args.commandtorun = args.commandtorun[1:-1]
-        if args.commandtorun.startswith("'") and args.commandtorun.endswith("'")
+        if args.commandtorun.startswith("'") and args.commandtorun.endswith("'"):
             print "Stripping single quotes from command"
             args.commandtorun = args.commandtorun[1:-1]
         print "Running command: {}".format(args.commandtorun)
