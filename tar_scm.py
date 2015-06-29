@@ -235,19 +235,19 @@ def fetch_upstream(scm, url, revision, out_dir, **kwargs):
     # revision
     if scm == 'git':
         fetch_upstream_git_submodules(clone_dir, kwargs)
-        if kwargs.commandtorun:
+        if kwargs['commandtorun']:
             savedir = os.getcwd()
             print "Current working directory is: {}".format(savedir)
             os.chdir(clone_dir)
             print "Current working directory is: {}".format(os.getcwd())
-            if kwargs.commandtorun.startswith('"') and kwargs.commandtorun.endswith('"'):
+            if kwargs['commandtorun'].startswith('"') and kwargs['commandtorun'].endswith('"'):
                 print "Stripping double quotes from command"
-                kwargs.commandtorun = kwargs.commandtorun[1:-1]
-            if kwargs.commandtorun.startswith("'") and kwargs.commandtorun.endswith("'"):
+                kwargs['commandtorun'] = kwargs['commandtorun'][1:-1]
+            if kwargs['commandtorun'].startswith("'") and kwargs['commandtorun'].endswith("'"):
                 print "Stripping single quotes from command"
-                kwargs.commandtorun = kwargs.commandtorun[1:-1]
-            print "Running command: {}".format(kwargs.commandtorun)
-            os.system(kwargs.commandtorun)
+                kwargs['commandtorun'] = kwargs['commandtorun'][1:-1]
+            print "Running command: {}".format(kwargs['commandtorun'])
+            os.system(kwargs['commandtorun'])
             os.chdir(savedir)
             print "Current working directory is: {}".format(os.getcwd())
 
