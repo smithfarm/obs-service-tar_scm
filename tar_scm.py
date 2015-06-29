@@ -236,20 +236,8 @@ def fetch_upstream(scm, url, revision, out_dir, **kwargs):
     if scm == 'git':
         fetch_upstream_git_submodules(clone_dir, kwargs)
         if kwargs['commandtorun']:
-            savedir = os.getcwd()
-            print "Current working directory is: {}".format(savedir)
-            os.chdir(clone_dir)
-            print "Current working directory is: {}".format(os.getcwd())
-            if kwargs['commandtorun'].startswith('"') and kwargs['commandtorun'].endswith('"'):
-                print "Stripping double quotes from command"
-                kwargs['commandtorun'] = kwargs['commandtorun'][1:-1]
-            if kwargs['commandtorun'].startswith("'") and kwargs['commandtorun'].endswith("'"):
-                print "Stripping single quotes from command"
-                kwargs['commandtorun'] = kwargs['commandtorun'][1:-1]
             print "Running command: {}".format(kwargs['commandtorun'])
-            os.system(kwargs['commandtorun'])
-            os.chdir(savedir)
-            print "Current working directory is: {}".format(os.getcwd())
+            safe_run(kwargs['commandtorun'].split(), cwd=clone_dir)
 
     return clone_dir
 
@@ -274,7 +262,7 @@ def prep_tree_for_tar(repodir, subdir, outdir, dstname):
 
 
 # skip vcs files base on this pattern
-METADATA_PATTERN = re.compile(r'.*/\.(git|hg|svn)/\.*')
+METADATA_PATTERN = re.compile(r'.*/\.(git([^_]|\Z)|hg|svn).*')
 
 
 def create_tar(repodir, outdir, dstname, extension='tar',
