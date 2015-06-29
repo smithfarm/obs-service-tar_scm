@@ -929,9 +929,13 @@ def main():
 
     if args.commandtorun:
         savedir = os.getcwd()
+        print( "Current working directory is: {}".format(savedir) );
         os.chdir(clone_dir)
+        print( "Current working directory is: {}".format(os.getcwd()) );
+        print( "Running command: {}".format(commandtorun) );
         os.system(args.commandtorun)
         os.chdir(savedir)
+        print( "Current working directory is: {}".format(os.getcwd()) );
 
     tar_dir = prep_tree_for_tar(clone_dir, args.subdir, args.outdir,
                                 dstname=dstname)
