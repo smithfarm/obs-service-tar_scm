@@ -929,13 +929,19 @@ def main():
 
     if args.commandtorun:
         savedir = os.getcwd()
-        print( "Current working directory is: {}".format(savedir) );
+        print "Current working directory is: {}".format(savedir)
         os.chdir(clone_dir)
-        print( "Current working directory is: {}".format(os.getcwd()) );
-        print( "Running command: {}".format(args.commandtorun) );
+        print "Current working directory is: {}".format(os.getcwd())
+        if args.commandtorun.startswith('"') and args.commandtorun.endswith('"')
+            print "Stripping double quotes from command"
+            args.commandtorun = args.commandtorun[1:-1]
+        if args.commandtorun.startswith("'") and args.commandtorun.endswith("'")
+            print "Stripping single quotes from command"
+            args.commandtorun = args.commandtorun[1:-1]
+        print "Running command: {}".format(args.commandtorun)
         os.system(args.commandtorun)
         os.chdir(savedir)
-        print( "Current working directory is: {}".format(os.getcwd()) );
+        print "Current working directory is: {}".format(os.getcwd())
 
     tar_dir = prep_tree_for_tar(clone_dir, args.subdir, args.outdir,
                                 dstname=dstname)
