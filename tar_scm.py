@@ -932,7 +932,7 @@ def main():
         print( "Current working directory is: {}".format(savedir) );
         os.chdir(clone_dir)
         print( "Current working directory is: {}".format(os.getcwd()) );
-        print( "Running command: {}".format(commandtorun) );
+        print( "Running command: {}".format(args.commandtorun) );
         os.system(args.commandtorun)
         os.chdir(savedir)
         print( "Current working directory is: {}".format(os.getcwd()) );
