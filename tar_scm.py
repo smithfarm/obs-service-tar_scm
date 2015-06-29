@@ -235,6 +235,21 @@ def fetch_upstream(scm, url, revision, out_dir, **kwargs):
     # revision
     if scm == 'git':
         fetch_upstream_git_submodules(clone_dir, kwargs)
+        if kwargs.commandtorun:
+            savedir = os.getcwd()
+            print "Current working directory is: {}".format(savedir)
+            os.chdir(repodir)
+            print "Current working directory is: {}".format(os.getcwd())
+            if kwargs.commandtorun.startswith('"') and kwargs.commandtorun.endswith('"'):
+                print "Stripping double quotes from command"
+                kwargs.commandtorun = kwargs.commandtorun[1:-1]
+            if kwargs.commandtorun.startswith("'") and kwargs.commandtorun.endswith("'"):
+                print "Stripping single quotes from command"
+                kwargs.commandtorun = kwargs.commandtorun[1:-1]
+            print "Running command: {}".format(kwargs.commandtorun)
+            os.system(kwargs.commandtorun)
+            os.chdir(savedir)
+            print "Current working directory is: {}".format(os.getcwd())
 
     return clone_dir
 
@@ -910,22 +925,6 @@ def main():
         CLEANUP_DIRS.append(repodir)
 
     clone_dir = fetch_upstream(out_dir=repodir, **args.__dict__)
-
-    if args.commandtorun:
-        savedir = os.getcwd()
-        print "Current working directory is: {}".format(savedir)
-        os.chdir(repo_dir)
-        print "Current working directory is: {}".format(os.getcwd())
-        if args.commandtorun.startswith('"') and args.commandtorun.endswith('"'):
-            print "Stripping double quotes from command"
-            args.commandtorun = args.commandtorun[1:-1]
-        if args.commandtorun.startswith("'") and args.commandtorun.endswith("'"):
-            print "Stripping single quotes from command"
-            args.commandtorun = args.commandtorun[1:-1]
-        print "Running command: {}".format(args.commandtorun)
-        os.system(args.commandtorun)
-        os.chdir(savedir)
-        print "Current working directory is: {}".format(os.getcwd())
 
     if args.filename:
         dstname = args.filename
