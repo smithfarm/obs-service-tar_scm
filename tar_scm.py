@@ -911,6 +911,22 @@ def main():
 
     clone_dir = fetch_upstream(out_dir=repodir, **args.__dict__)
 
+    if args.commandtorun:
+        savedir = os.getcwd()
+        print "Current working directory is: {}".format(savedir)
+        os.chdir(repo_dir)
+        print "Current working directory is: {}".format(os.getcwd())
+        if args.commandtorun.startswith('"') and args.commandtorun.endswith('"'):
+            print "Stripping double quotes from command"
+            args.commandtorun = args.commandtorun[1:-1]
+        if args.commandtorun.startswith("'") and args.commandtorun.endswith("'"):
+            print "Stripping single quotes from command"
+            args.commandtorun = args.commandtorun[1:-1]
+        print "Running command: {}".format(args.commandtorun)
+        os.system(args.commandtorun)
+        os.chdir(savedir)
+        print "Current working directory is: {}".format(os.getcwd())
+
     if args.filename:
         dstname = args.filename
     else:
@@ -926,22 +942,6 @@ def main():
     changes = None
     if args.changesgenerate:
         changes = detect_changes(args.scm, args.url, clone_dir, args.outdir)
-
-    if args.commandtorun:
-        savedir = os.getcwd()
-        print "Current working directory is: {}".format(savedir)
-        os.chdir(clone_dir)
-        print "Current working directory is: {}".format(os.getcwd())
-        if args.commandtorun.startswith('"') and args.commandtorun.endswith('"'):
-            print "Stripping double quotes from command"
-            args.commandtorun = args.commandtorun[1:-1]
-        if args.commandtorun.startswith("'") and args.commandtorun.endswith("'"):
-            print "Stripping single quotes from command"
-            args.commandtorun = args.commandtorun[1:-1]
-        print "Running command: {}".format(args.commandtorun)
-        os.system(args.commandtorun)
-        os.chdir(savedir)
-        print "Current working directory is: {}".format(os.getcwd())
 
     tar_dir = prep_tree_for_tar(clone_dir, args.subdir, args.outdir,
                                 dstname=dstname)
