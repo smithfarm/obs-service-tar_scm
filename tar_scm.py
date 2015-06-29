@@ -274,7 +274,7 @@ def prep_tree_for_tar(repodir, subdir, outdir, dstname):
 
 
 # skip vcs files base on this pattern
-METADATA_PATTERN = re.compile(r'.*/\.(git|hg|svn).*')
+METADATA_PATTERN = re.compile(r'.*/\.(git|hg|svn)/\.*')
 
 
 def create_tar(repodir, outdir, dstname, extension='tar',
